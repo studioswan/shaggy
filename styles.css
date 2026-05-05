@@ -1,0 +1,807 @@
+/* =====================================================================
+   Shaggy — coming-soon page
+   Premium dog grooming salon · Bryker Woods, Austin · Summer 2026
+   ===================================================================== */
+
+/* ---------- Brand fonts ---------------------------------------------- */
+@font-face {
+  font-family: 'Emilio';
+  src: url('assets/fonts/HEADER_-_Emilio_Thin.otf') format('opentype');
+  font-weight: 100 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Emilio';
+  src: url('assets/fonts/HEADER_ITALIC_-_Emilio_Thin_Italic.otf') format('opentype');
+  font-weight: 100 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Maison Neue';
+  src: url('assets/fonts/BODY_-_Maison_Neue_Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Switzer';
+  src: url('assets/fonts/ACCENT_-_Switzer_Regular.otf') format('opentype');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Freight';
+  src: url('assets/fonts/SUBACCENT_-_Freight_Light_Italic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ---------- Tokens --------------------------------------------------- */
+:root {
+  --burgundy:    #2A080B;
+  --terracotta:  #AD7065;
+  --olive:       #463E17;
+  --chartreuse:  #E2EB99;
+  --cream:       #FEFDED;
+  --peach:       #F2C2A2;
+  --mustard:     #E0B447;
+
+  --font-display: 'Emilio', 'Italiana', Georgia, serif;
+  --font-body:    'Maison Neue', system-ui, sans-serif;
+  --font-ui:      'Switzer', system-ui, sans-serif;
+  --font-italic:  'Freight', Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--cream);
+  color: var(--burgundy);
+}
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- Shared element styles ------------------------------------ */
+.s-eyebrow {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.s-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.04;
+  margin: 0;
+}
+.s-body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.55;
+  margin: 0;
+  text-wrap: pretty;
+}
+.s-italic {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* Email row */
+.s-emailrow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: stretch;
+  border-bottom: 1px solid currentColor;
+}
+.s-emailrow input {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  padding: 14px 0;
+  color: inherit;
+  width: 100%;
+}
+.s-emailrow input::placeholder {
+  color: inherit;
+  opacity: 0.5;
+}
+.s-emailrow button {
+  font-family: var(--font-ui);
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: opacity 200ms ease;
+}
+.s-emailrow button:hover { opacity: 0.7; }
+
+.s-dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0.6;
+  vertical-align: middle;
+  margin: 0 10px;
+}
+
+/* ---------- Stacked-page layout -------------------------------------- */
+#stack {
+  display: block;
+  width: 100%;
+  scroll-snap-type: y mandatory;
+}
+
+.section {
+  width: 100%;
+  height: 100vh;
+  min-height: 720px;
+  scroll-snap-align: start;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 760px) {
+  .section { min-height: 640px; }
+}
+
+/* ---------- Section 1: hero ------------------------------------------ */
+.hero {
+  background: var(--cream);
+  color: var(--burgundy);
+  padding: clamp(40px, 6vh, 72px) clamp(24px, 6vw, 96px) clamp(56px, 6vh, 80px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(20px, 3vh, 40px);
+}
+
+.hero__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero__eyebrow {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero__eyebrow--burgundy { color: var(--burgundy); }
+.hero__eyebrow--olive    { color: var(--olive); }
+
+.hero__bullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  display: inline-block;
+}
+.hero__bullet--peach   { background: var(--peach); }
+.hero__bullet--mustard { background: var(--mustard); }
+
+.hero__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: 32px 0;
+}
+
+.hero__wordmark {
+  width: min(86%, 1080px);
+  display: block;
+}
+
+.hero__season {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0; /* spacing handled by the dot's own margin */
+  color: var(--olive);
+}
+.hero__season .s-italic { font-size: 22px; }
+.hero__season .s-eyebrow { letter-spacing: 0.2em; font-size: 14px; }
+/* Small ink-colored dot between "opening summer 2026" and "By appointment".
+   Reads as elegant dark grey — burgundy at low opacity gives a warm,
+   brand-consistent neutral that doesn't clash with peach or chartreuse.
+   Mobile-only — hidden on desktop along with "By appointment". */
+.hero__season .s-dot--ink {
+  width: 3px;
+  height: 3px;
+  margin: 0 18px;
+  background: var(--burgundy);
+  opacity: 0.45;
+  vertical-align: middle;
+}
+
+/* Desktop only: drop the "By appointment" eyebrow + ink dot, leaving
+   "opening summer 2026" centered alone beneath the wordmark. */
+@media (min-width: 861px) {
+  .hero__season .s-dot--ink,
+  .hero__season .s-eyebrow {
+    display: none;
+  }
+}
+
+.hero__bottom {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  color: var(--burgundy);
+}
+
+.hero__scroll {
+  color: var(--olive);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.hero__scroll-line {
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--peach);
+  opacity: 1;
+}
+
+/* Inline peach dot used inside the hero masthead eyebrow row */
+.hero__top .s-dot--peach {
+  width: 5px;
+  height: 5px;
+  margin: 0 10px;
+  background: var(--peach);
+  opacity: 1;
+  display: inline-block;
+  border-radius: 9999px;
+  vertical-align: middle;
+}
+
+/* Tightened spacing variant for the page-1 left eyebrow —
+   pulls "Austin · Summer 2026" together with smaller dot margins. */
+.hero__eyebrow--tight {
+  gap: 6px;
+}
+.hero__eyebrow--tight .s-dot--peach {
+  margin: 0 4px;
+}
+
+/* Top-right CTA button — burgundy ghost pill on cream.
+   Text size matches the eyebrow + scroll cue for masthead parity. */
+.hero__cta {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  background: transparent;
+  border: 1px solid var(--burgundy);
+  border-radius: 9999px;
+  padding: 9px 16px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1;
+  transition: background-color 160ms ease, color 160ms ease;
+  white-space: nowrap;
+}
+.hero__cta:hover {
+  background: var(--burgundy);
+  color: var(--cream);
+}
+.hero__cta-arrow {
+  font-size: 14px;
+  transform: translateY(-1px);
+}
+
+/* ---------- Section 2: all-type variant C ---------------------------- */
+.alltype {
+  background: var(--burgundy);
+  color: var(--cream);
+  padding: clamp(40px, 4.5vw, 72px) clamp(40px, 5.6vw, 110px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: clamp(24px, 3vh, 48px);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.alltype__glow {
+  position: absolute;
+  right: -12%;
+  top: 20%;
+  width: 70%;
+  height: 60%;
+  background: radial-gradient(closest-side, rgba(226, 235, 153, 0.16), transparent 70%);
+  animation: ambient-drift 12000ms ease-in-out infinite;
+  pointer-events: none;
+}
+
+.alltype__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.alltype__wordmark {
+  height: clamp(48px, 4.4vw, 80px);
+  display: block;
+  opacity: 0.95;
+  /* High-quality downsampling on the 3000×1606 wordmark PNG.
+     Force a GPU compositor layer so the breathe transform doesn't
+     trigger sub-pixel blur on the rasterized image. */
+  image-rendering: -webkit-optimize-contrast;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.alltype__masthead-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+.alltype__masthead-meta .s-eyebrow {
+  opacity: 0.92;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+}
+.alltype__masthead-meta .s-dot {
+  opacity: 0.5;
+  background: var(--peach);
+}
+
+.alltype__middle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  position: relative;
+  z-index: 1;
+  gap: clamp(28px, 4vh, 56px);
+  /* Breathing room between the masthead row and the headline. */
+  padding-top: clamp(40px, 6vh, 96px);
+  width: 100%;
+}
+
+.alltype__headline {
+  font-size: clamp(46px, 5.2vw, 92px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  max-width: 100%;
+}
+.alltype__headline .accent { color: var(--chartreuse); }
+.alltype__headline .with-social {
+  font-family: var(--font-italic);
+  font-style: italic;
+  color: var(--cream);
+  opacity: 0.92;
+}
+.alltype__headline .nowrap { white-space: nowrap; }
+/* .line-2 stays inline on every viewport. On desktop the native <br>
+   inside it fires, ending line 1 cleanly at "for dogs"; on mobile that
+   <br> is hidden (in the mobile media query below) so the phrase wraps
+   width-driven into the editorial block. */
+.alltype__headline .line-2 { display: inline; }
+
+/* Cluster — single-column stack on every viewport. The headline is the
+   star; the cluster reads as quiet, restrained supporting copy. */
+.alltype__cluster {
+  margin-top: clamp(28px, 3vh, 44px);
+  padding-top: clamp(20px, 2.4vh, 32px);
+  padding-bottom: clamp(20px, 2.4vh, 32px);
+  border-top: 1px solid rgba(254, 253, 237, 0.18);
+  border-bottom: 1px solid rgba(254, 253, 237, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: clamp(18px, 2vh, 28px);
+}
+
+/* Counter — vertical stack, left-aligned, delicate. */
+.alltype__counter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.alltype__counter-eyebrow {
+  color: var(--peach);
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  white-space: nowrap;
+}
+.alltype__counter-row {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  white-space: nowrap;
+}
+.alltype__counter-num {
+  font-size: 28px;
+  color: var(--chartreuse);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.alltype__counter-label {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--cream);
+  opacity: 0.7;
+}
+
+/* Lede — full-width body paragraph, slightly larger than mobile. */
+.alltype__lede {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--cream);
+  opacity: 0.85;
+  max-width: 100%;
+  align-self: stretch;
+}
+.alltype__lede .signoff {
+  font-family: var(--font-italic);
+  font-style: italic;
+  color: var(--cream);
+  font-size: 1.15em;
+}
+
+/* CTA — full-width email row, refined to read as a quiet hairline
+   waiting for a single email rather than a chunky form. */
+.alltype__cta {
+  color: var(--cream);
+  align-self: stretch;
+  transform: none;
+}
+.alltype__cta .s-emailrow {
+  border-color: rgba(254, 253, 237, 0.55);
+  border-bottom-width: 1px;
+}
+.alltype__cta input {
+  color: var(--cream);
+  font-size: 14px;
+  padding: 11px 0;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
+.alltype__cta input::placeholder {
+  color: var(--cream);
+  opacity: 0.4;
+}
+.alltype__cta button {
+  color: var(--chartreuse);
+  font-size: 11px;
+  padding: 11px 0 11px 20px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.alltype__cta button .arrow {
+  font-size: 14px;
+  margin-left: 6px;
+}
+
+.alltype__cta-note {
+  font-size: 11px;
+  color: var(--cream);
+  opacity: 0.45;
+  letter-spacing: 0.005em;
+  margin-top: 8px;
+}
+
+.alltype__done {
+  border-bottom: 2px solid var(--cream);
+  padding: clamp(14px, 1.5vw, 22px) 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.alltype__done-pulse {
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  background: var(--chartreuse);
+  box-shadow: 0 0 0 5px rgba(226, 235, 153, 0.2);
+}
+.alltype__done-text {
+  font-size: clamp(16px, 1.3vw, 20px);
+  color: var(--cream);
+  opacity: 0.92;
+}
+
+.alltype__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  padding-top: clamp(14px, 1.5vw, 24px);
+}
+.alltype__bottom .s-italic {
+  font-size: 14px;
+  white-space: nowrap;
+}
+.alltype__bottom .footer-left  { opacity: 0.7; }
+.alltype__bottom .footer-right { color: var(--peach); opacity: 0.9; }
+
+/* ---------- Social row icons ----------------------------------------- */
+.s-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  flex: 0 0 auto;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+.s-iconlink {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  margin: -6px;
+  opacity: 0.78;
+  transition: opacity 200ms ease;
+}
+.s-iconlink:hover { opacity: 1; }
+.s-iconlink:hover .s-icon { transform: translateY(-1px); }
+
+.social-row {
+  display: inline-flex;
+  gap: 22px;
+  align-items: center;
+}
+
+/* ---------- Ambient animation ---------------------------------------- */
+@keyframes ambient-breathe {
+  0%, 100% { transform: scale(1.000); }
+  50%      { transform: scale(1.006); }
+}
+.ambient-breathe {
+  animation: ambient-breathe 7000ms ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes ambient-drift {
+  0%, 100% { opacity: 0.18; transform: translate(0, 0); }
+  50%      { opacity: 0.28; transform: translate(2%, -1.5%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-breathe,
+  .alltype__glow {
+    animation: none !important;
+  }
+}
+
+/* ---------- Mobile reflow --------------------------------------------
+   Below 860px the three-column cluster collapses to a single column; the
+   headline scales further down and the masthead/footer wrap. The native
+   design lives at 1440×900 — these rules keep it readable everywhere else.
+   -------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .hero {
+    padding: 32px 24px 40px;
+    gap: 20px;
+  }
+  .hero__top {
+    gap: 12px;
+  }
+  .hero__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    gap: 8px;
+  }
+  .hero__bullet { width: 5px; height: 5px; }
+  .hero__season .s-italic { font-size: 20px; }
+  .hero__season .s-eyebrow { font-size: 12px; }
+  .hero__season .s-dot { margin: 0 10px; }
+  /* Desktop-only ink dot — hidden on every mobile breakpoint */
+  .hero__season .s-dot--ink { display: none; }
+  .hero__scroll { font-size: 11px; letter-spacing: 0.2em; }
+  .hero__scroll-line { width: 18px; }
+  /* Page-1 social icons hidden on mobile */
+  .hero__bottom .social-row { display: none; }
+
+  .alltype {
+    padding: 28px 12px;
+    row-gap: 22px;
+  }
+  .alltype__top {
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+  }
+  .alltype__wordmark {
+    height: 32px;
+    flex: 0 0 auto;
+  }
+  .alltype__masthead-meta {
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+  .alltype__masthead-meta .s-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+  }
+  .alltype__masthead-meta .s-dot { margin: 0 6px; }
+  .alltype__middle {
+    padding-top: clamp(24px, 5vh, 48px);
+    justify-content: flex-start;
+  }
+  /* HEADLINE — the focal point. Inherits the desktop's four-line
+     composition exactly via the existing <br>s. Pushed to the largest
+     size that still keeps each phrase on a single line, with tight
+     line-height so the type feels weighty and the block reads as
+     a poster. */
+  .alltype__headline {
+    font-size: clamp(26px, 7vw, 44px);
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+  /* Hide the inner <br> in .line-2 only — keeps "for dogs" together
+     with "with a social calendar" on line 2 like desktop. The other
+     three native <br>s stay visible. */
+  .alltype__headline .line-2 br { display: none; }
+
+  .alltype__cluster {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  /* COUNTER — vertical stack, left-aligned, delicate. Eyebrow on top,
+     small chartreuse "63 spots left" beneath. Loewe restraint: small,
+     considered, never shouting next to the headline. */
+  .alltype__counter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 6px;
+    padding: 0;
+    width: 100%;
+  }
+  .alltype__counter-row {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .alltype__counter-num {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 100;
+    color: var(--chartreuse);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .alltype__counter-label {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    color: var(--cream);
+    opacity: 0.65;
+  }
+  .alltype__counter-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    color: var(--peach);
+    opacity: 0.95;
+  }
+
+  /* LEDE + CTA — left-aligned, slightly tighter so the headline keeps
+     focus. Email row is the call-to-action; everything else supports it. */
+  .alltype__lede {
+    font-size: 13px;
+    line-height: 1.55;
+    opacity: 0.82;
+    text-align: left;
+    max-width: 100%;
+  }
+  .alltype__lede .signoff { font-size: 1.1em; }
+  .alltype__cta { transform: none; }
+  .alltype__cta input { font-size: 13px; padding: 9px 0; }
+  .alltype__cta button {
+    font-size: 10px;
+    padding: 9px 0 9px 12px;
+    letter-spacing: 0.18em;
+  }
+  .alltype__cta button .arrow { font-size: 14px; }
+  .alltype__cta-note { font-size: 11px; opacity: 0.55; margin-top: 8px; }
+  .alltype__bottom {
+    flex-wrap: nowrap;
+    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .alltype__bottom .s-italic { font-size: 11px; letter-spacing: 0.01em; }
+  /* Tighter, smaller social icons on page 2 mobile footer */
+  .alltype__bottom .social-row { gap: 4px; }
+  .alltype__bottom .s-icon { width: 16px; height: 16px; }
+  .alltype__bottom .s-iconlink { padding: 3px; margin: -3px; }
+}
+
+/* Very narrow — keep eyebrows on one row, stack hero footer + season label */
+@media (max-width: 480px) {
+  .hero__top {
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+  .hero__eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+  .hero__bottom { justify-content: flex-end; }
+  .hero__scroll { font-size: 10px; letter-spacing: 0.18em; gap: 10px; }
+  .hero__scroll-line { width: 14px; }
+  /* Compact CTA pill on narrow widths */
+  .hero__cta {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    padding: 7px 11px;
+    gap: 6px;
+  }
+  .hero__cta-arrow { font-size: 11px; }
+  .hero__season {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .hero__season .s-italic { font-size: 18px; }
+  .hero__season .s-eyebrow { font-size: 11px; letter-spacing: 0.16em; }
+  .hero__season .s-dot { display: none; }
+
+  /* Drop "Bryker Woods · " prefix when masthead can't fit it */
+  .alltype__top { gap: 10px; }
+  .alltype__wordmark { height: 28px; }
+  .alltype__masthead-meta .s-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+  .alltype__masthead-meta .s-dot { margin: 0 5px; }
+  .masthead-bw { display: none; }
+}

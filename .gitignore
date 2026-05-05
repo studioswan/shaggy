@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+
+# Local dev tooling (Claude Code preview server config)
+.claude/
+
+# Logs
+*.log
