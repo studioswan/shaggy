@@ -1,5 +1,9 @@
-// Founding-100 enrollment — local-only counter; swap localStorage for a
-// real backend (Buttondown / Formspree / your own API) when wiring up.
+// Founding-100 enrollment.
+//
+// Submits to /api/subscribe (a Cloudflare Pages Function in
+// functions/api/subscribe.js) which forwards to Buttondown using a
+// server-side secret. Counter remains client-side localStorage as social
+// proof — the canonical subscriber list lives in Buttondown.
 (function () {
   const BASELINE = 37;
   const CAP = 100;
@@ -31,19 +35,24 @@
 
   renderRemaining();
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = (emailInput.value || '').trim();
-    if (!email || !emailInput.checkValidity()) {
-      emailInput.focus();
-      return;
+  const showError = (message) => {
+    let el = cta.querySelector('.alltype__cta-error');
+    if (!el) {
+      el = document.createElement('p');
+      el.className = 'alltype__cta-error';
+      const note = cta.querySelector('.alltype__cta-note');
+      if (note) cta.insertBefore(el, note);
+      else cta.appendChild(el);
     }
+    el.textContent = message;
+  };
 
-    const next = readClaimed() + 1;
-    writeClaimed(next);
-    renderRemaining();
+  const clearError = () => {
+    const el = cta.querySelector('.alltype__cta-error');
+    if (el) el.remove();
+  };
 
-    // Replace form with confirmation, preserve the helper note.
+  const showConfirmation = () => {
     const note = cta.querySelector('.alltype__cta-note');
     form.outerHTML = `
       <div class="alltype__done">
@@ -52,12 +61,45 @@
       </div>
     `;
     if (note) cta.appendChild(note);
+  };
 
-    // TODO: POST email to your backend here, e.g.:
-    // fetch('https://api.your-form-service.com/...', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ email }),
-    // });
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearError();
+
+    const email = (emailInput.value || '').trim();
+    if (!email || !emailInput.checkValidity()) {
+      emailInput.focus();
+      return;
+    }
+
+    const button = form.querySelector('button[type="submit"]');
+    const originalButtonHTML = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = 'Sending…';
+
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Could not subscribe — please try again.');
+      }
+
+      // Bump the counter only on confirmed success so a failed network
+      // call doesn't artificially inflate "claimed" spots.
+      const next = readClaimed() + 1;
+      writeClaimed(next);
+      renderRemaining();
+      showConfirmation();
+    } catch (err) {
+      button.disabled = false;
+      button.innerHTML = originalButtonHTML;
+      showError(err.message || 'Could not subscribe — please try again.');
+    }
   });
 })();

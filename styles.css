@@ -513,6 +513,11 @@ body {
   font-weight: 400;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+  transition: opacity 160ms ease;
+}
+.alltype__cta button[disabled] {
+  opacity: 0.5;
+  cursor: progress;
 }
 .alltype__cta button .arrow {
   font-size: 14px;
@@ -525,6 +530,17 @@ body {
   opacity: 0.45;
   letter-spacing: 0.005em;
   margin-top: 8px;
+}
+
+/* Inline error message — peach so it reads as a soft warning, not an
+   alarming red. Sits above the helper note. */
+.alltype__cta-error {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--peach);
+  letter-spacing: 0.005em;
+  opacity: 0.95;
+  margin: 8px 0 0;
 }
 
 .alltype__done {
