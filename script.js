@@ -5,9 +5,12 @@
 // server-side secret. Counter remains client-side localStorage as social
 // proof — the canonical subscriber list lives in Buttondown.
 (function () {
-  const BASELINE = 37;
+  // Pre-launch reset: counter starts at 100 spots remaining.
+  // STORAGE_KEY bumped to v2 so anyone who tested the v1 counter gets
+  // a fresh state on first visit after this deploy.
+  const BASELINE = 0;
   const CAP = 100;
-  const STORAGE_KEY = 'shaggy_claimed';
+  const STORAGE_KEY = 'shaggy_claimed_v2';
 
   const remainingEl = document.getElementById('remaining');
   const form = document.getElementById('enroll-form');
