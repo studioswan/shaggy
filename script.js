@@ -10,7 +10,7 @@
   // a fresh state on first visit after this deploy.
   const BASELINE = 0;
   const CAP = 100;
-  const STORAGE_KEY = 'shaggy_claimed_v2';
+  const STORAGE_KEY = 'shaggy_claimed_v3';
 
   const remainingEl = document.getElementById('remaining');
   const form = document.getElementById('enroll-form');
