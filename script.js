@@ -2,15 +2,13 @@
 //
 // Submits to /api/subscribe (a Cloudflare Pages Function in
 // functions/api/subscribe.js) which forwards to Buttondown using a
-// server-side secret. Counter remains client-side localStorage as social
-// proof — the canonical subscriber list lives in Buttondown.
+// server-side secret.
+//
+// The remaining-spots counter fetches the real subscriber count from
+// /api/count (which queries Buttondown server-side) so every visitor
+// sees the same accurate number.
 (function () {
-  // Pre-launch reset: counter starts at 100 spots remaining.
-  // STORAGE_KEY bumped to v2 so anyone who tested the v1 counter gets
-  // a fresh state on first visit after this deploy.
-  const BASELINE = 0;
   const CAP = 100;
-  const STORAGE_KEY = 'shaggy_claimed_v3';
 
   const remainingEl = document.getElementById('remaining');
   const form = document.getElementById('enroll-form');
@@ -19,25 +17,24 @@
 
   if (!remainingEl || !form || !cta) return;
 
-  const readClaimed = () => {
+  // ── Counter ──────────────────────────────────────────────────────
+  // Fetch the real remaining count from the server.
+  const fetchRemaining = async () => {
     try {
-      const stored = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
-      return Math.max(stored, BASELINE);
+      const res = await fetch('/api/count');
+      if (!res.ok) return;
+      const data = await res.json();
+      if (typeof data.remaining === 'number') {
+        remainingEl.textContent = String(data.remaining);
+      }
     } catch (_) {
-      return BASELINE;
+      // Network error — leave the default (100) in place.
     }
   };
 
-  const writeClaimed = (n) => {
-    try { localStorage.setItem(STORAGE_KEY, String(n)); } catch (_) {}
-  };
+  fetchRemaining();
 
-  const renderRemaining = () => {
-    remainingEl.textContent = String(Math.max(0, CAP - readClaimed()));
-  };
-
-  renderRemaining();
-
+  // ── Form handling ────────────────────────────────────────────────
   const showError = (message) => {
     let el = cta.querySelector('.alltype__cta-error');
     if (!el) {
@@ -93,11 +90,8 @@
         throw new Error(data.error || 'Could not subscribe — please try again.');
       }
 
-      // Bump the counter only on confirmed success so a failed network
-      // call doesn't artificially inflate "claimed" spots.
-      const next = readClaimed() + 1;
-      writeClaimed(next);
-      renderRemaining();
+      // Refresh the counter from the server to reflect the new signup.
+      await fetchRemaining();
       showConfirmation();
     } catch (err) {
       button.disabled = false;
